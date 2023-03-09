@@ -1,5 +1,5 @@
 ---
-title: "바이낸스(Binance)에서 비트코인(BTC) ohlcv 5분봉 가져오기"
+title: "바이낸스에서 비트코인 ohlcv 5분봉 가져오기"
 categories: Python
 tags:
   - Python
@@ -70,6 +70,3 @@ newline 인자를 빈 문자열("")로 지정하여 csv 파일에 빈 줄을 삽
 datetime 모듈을 사용하여 timestamp를 datetime 객체로 변환하고, strftime() 메서드를 사용하여 필요한 형식으로 포맷한다.  
 이 코드에서는 "%Y-%m-%d %H:%M" 형식으로 포맷팅한다. 이 형식은 연도-월-일 시:분으로 표현한다.  
 
-
-## 마치며
-경제적 자유를 꿈꿔본다...  
