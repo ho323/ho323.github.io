@@ -5,7 +5,6 @@ tags:
   - Python
   - ML
   - Reinforcement Learning
-  - Coin
   - Crawling
 search: true
 ---
