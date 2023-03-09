@@ -3,9 +3,9 @@ title: "바이낸스(Binance)에서 비트코인(BTC) ohlcv 5분봉 가져오기
 categories: Python
 tags:
   - Python
+  - Crawling
   - ML
   - Reinforcement Learning
-  - Crawling
 search: true
 ---
 
