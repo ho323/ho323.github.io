@@ -1,0 +1,693 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>바이낸스(Binance)에서 비트코인(BTC) ohlcv 5분봉 가져오기 - Ho323</title>
+<meta name="description" content="나는 평소에 바이낸스 선물 거래를 한다. 그러다 어떤 데이터를 넣고 실험해 보고 싶은 게 생겨서 강화 학습으로 만들어 보려고 한다.">
+
+
+  <meta name="author" content="김호성">
+  
+  <meta property="article:author" content="김호성">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Ho323">
+<meta property="og:title" content="바이낸스(Binance)에서 비트코인(BTC) ohlcv 5분봉 가져오기">
+<meta property="og:url" content="http://localhost:4000/rl/binance-btc-data/">
+
+
+  <meta property="og:description" content="나는 평소에 바이낸스 선물 거래를 한다. 그러다 어떤 데이터를 넣고 실험해 보고 싶은 게 생겨서 강화 학습으로 만들어 보려고 한다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-03-10T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/rl/binance-btc-data/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "김호성",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Ho323 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Ho323
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/bio-photo.jpeg" alt="김호성" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">김호성</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>이것저것</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Seoul</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:owenk6048@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/ho323" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/ho_o323/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="바이낸스(Binance)에서 비트코인(BTC) ohlcv 5분봉 가져오기">
+    <meta itemprop="description" content="나는 평소에 바이낸스 선물 거래를 한다.그러다 어떤 데이터를 넣고 실험해 보고 싶은 게 생겨서 강화 학습으로 만들어 보려고 한다.">
+    <meta itemprop="datePublished" content="2023-03-10T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/rl/binance-btc-data/" class="u-url" itemprop="url">바이낸스(Binance)에서 비트코인(BTC) ohlcv 5분봉 가져오기
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>나는 평소에 바이낸스 선물 거래를 한다.<br />
+그러다 어떤 데이터를 넣고 실험해 보고 싶은 게 생겨서 강화 학습으로 만들어 보려고 한다.</p>
+
+<p>강화 학습 공부도 할 겸.</p>
+
+<h2 id="5분봉으로-선택한-이유">5분봉으로 선택한 이유</h2>
+<p>나는 단타 모델로 만들 거라서 5분봉 데이터를 사용하기로 했다.<br />
+그렇다고 1분봉으로 하기엔 거래가 너무 자주 일어나서 수수료 때문에 손해를 볼 것 같았다.<br />
+<del>바이낸스 시장가 수수료 양아치</del></p>
+
+<p>문제는 바이낸스에선 최대 1000개의 데이터만 가져올 수 있다.<br />
+그래서 지금부터라도 천천히 데이터를 쌓아가 될 것 같다.</p>
+
+<h2 id="5분봉-가져오는-코드">5분봉 가져오는 코드</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">time</span>
+<span class="kn">import</span> <span class="n">requests</span>
+<span class="kn">import</span> <span class="n">json</span>
+<span class="kn">import</span> <span class="n">csv</span>
+<span class="kn">from</span> <span class="n">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.binance.com/api/v3/klines"</span>
+<span class="n">interval</span> <span class="o">=</span> <span class="s">"5m"</span>
+<span class="n">symbol</span> <span class="o">=</span> <span class="s">"BTCUSDT"</span>
+<span class="n">limit</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 5분봉 데이터를 하나씩 가져옴
+</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">"symbol"</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span> <span class="s">"interval"</span><span class="p">:</span> <span class="n">interval</span><span class="p">,</span> <span class="s">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">loads</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="s">"btc_usdt_ohlcv.csv"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">"a"</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s">""</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">writer</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span>  <span class="c1"># 밀리초를 초 단위로 변환
+</span>                <span class="n">dt_object</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="nf">fromtimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+                <span class="n">dt_str</span> <span class="o">=</span> <span class="n">dt_object</span><span class="p">.</span><span class="nf">strftime</span><span class="p">(</span><span class="s">"%Y-%m-%d %H:%M"</span><span class="p">)</span>
+                <span class="n">open_price</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">high_price</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">low_price</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                <span class="n">close_price</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+                <span class="n">volume</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+                <span class="n">writer</span><span class="p">.</span><span class="nf">writerow</span><span class="p">([</span><span class="n">dt_str</span><span class="p">,</span> <span class="n">open_price</span><span class="p">,</span> <span class="n">high_price</span><span class="p">,</span> <span class="n">low_price</span><span class="p">,</span> <span class="n">close_price</span><span class="p">,</span> <span class="n">volume</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Error:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">)</span>
+
+    <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>  <span class="c1"># 5분 대기
+</span></code></pre></div></div>
+<p>코드는 300초(5분)마다 반복 실행된다.</p>
+
+<p>“https://api.binance.com/api/v3/klines”에서 바이낸스 BTC/USDT 쌍의 5분봉 데이터를 가져온다.<br />
+가져온 데이터의 ohlcv 데이터만 btc_usdt_ohlv.csv에 저장한다.</p>
+
+<p>newline 인자를 빈 문자열(““)로 지정하여 csv 파일에 빈 줄을 삽입하지 않도록 한다.</p>
+
+<p>datetime 모듈을 사용하여 timestamp를 datetime 객체로 변환하고, strftime() 메서드를 사용하여 필요한 형식으로 포맷한다.<br />
+이 코드에서는 “%Y-%m-%d %H:%M” 형식으로 포맷팅한다. 이 형식은 연도-월-일 시:분으로 표현한다.</p>
+
+<h2 id="마치며">마치며</h2>
+<p>경제적 자유를 꿈꿔본다…</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#coin" class="page__taxonomy-item p-category" rel="tag">Coin</a><span class="sep">, </span>
+    
+      <a href="/tags/#crawling" class="page__taxonomy-item p-category" rel="tag">Crawling</a><span class="sep">, </span>
+    
+      <a href="/tags/#ml" class="page__taxonomy-item p-category" rel="tag">ML</a><span class="sep">, </span>
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">Python</a><span class="sep">, </span>
+    
+      <a href="/tags/#reinforcement-learning" class="page__taxonomy-item p-category" rel="tag">Reinforcement Learning</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#rl" class="page__taxonomy-item p-category" rel="tag">RL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2023-03-10T00:00:00+09:00">March 10, 2023</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%EB%B0%94%EC%9D%B4%EB%82%B8%EC%8A%A4%28Binance%29%EC%97%90%EC%84%9C+%EB%B9%84%ED%8A%B8%EC%BD%94%EC%9D%B8%28BTC%29+ohlcv+5%EB%B6%84%EB%B4%89+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Frl%2Fbinance-btc-data%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Frl%2Fbinance-btc-data%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Frl%2Fbinance-btc-data%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/flutter/flutter-app-ep1/" class="pagination--pager" title="Flutter로 앱 만들기 ep1
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/flutter/flutter-app-ep1/" rel="permalink">Flutter로 앱 만들기 ep1
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">최근에 취미로 클라이밍을 하고 있는데 괜찮은 커뮤니티 앱이 있다면 참 좋겠다 싶었다.
+기다릴 내가 아니었다. 이번 기회에 앱도 만들어 보자라는 생각으로 친구랑 둘이 배워서 만들기로 했다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/python/jupyter-notebook-autocomplete/" rel="permalink">Jupyter Notebook에서 자동완성 기능 사용하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">주피터 노트북에서도 vscode처럼 자동완성 기능을 사용할 수 있다.
+이런 기능을 사용할 수 있다는 것을 오늘 처음 알게 되었는데 너무 좋아서 감격스러움에 바로 글을 작성하고 있다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/python/opencv-video/" rel="permalink">OpenCV를 이용한 영상처리
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">나는 자율주행 인공지능을 공부하고 싶다.
+자율주행 인공지능은 카메라를 통해 촬영하는 영상을 인식해야하기 때문에 영상을 처리하는 방법을 알고싶었다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/git/github-password-token/" rel="permalink">GitHub Commit 비밀번호를 토큰 방식으로 바꾸는 방법
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+갑자기 GitHub Commit 오류?
+평소와 똑같이 깃허브 커밋하는데 아래와 같은 오류가 발생했다.
+remote: Password authentication is temporarily disabled as part of a brownout. Please use a persona...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:owenk6048@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/ho323" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/ho_o323/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 김호성. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
