@@ -1,13 +1,13 @@
-- - - -
+---
 title: "벽과함께 게시글 업로드"
 categories: Flutter
 tags:
-* Flutter
-* Firebase
-* App
-* Video
+  - Flutter
+  - Firebase
+  - App
+  - Video
 search: true
-- - - -
+---
 
 
 # 벽과함께 게시글 업로드
