@@ -1,5 +1,5 @@
 ---
-title: "벽과함께 게시글 업로드"
+title: "Flutter 게시글 업로드 및 영상 다운 스케일링"
 categories: Flutter
 tags:
   - Flutter
@@ -10,18 +10,19 @@ search: true
 ---
 
 ## 설계
-기본적인 틀은 만들었다.  
+기획했던 앱의 기본적인 틀은 만들었다.  
 데이터베이스를 이용해서 게시글을 올리면 홈 피드에 표시될 수 있게 만들려고 한다.  
 
 데이터베이스는 Firebase를 사용한다.  
 HomeScreen에 FloatingActionButton 기능을 사용하여 언제든 버튼을 눌러서 게시글을 업로드 할 수 있게 설계했다.  
 <img height="590" width="286" alt="1" src="https://user-images.githubusercontent.com/86637300/228469652-f0fb55f4-60e8-4d48-bd18-a66f57746878.png">  
+홈 피드에서 공유된 게시글의 영상들과 댓글을 볼 수 있고, 좋아요를 누를 수 있다.  
 
 <img height="590" width="286" alt="2" src="https://user-images.githubusercontent.com/86637300/228469650-729f001a-3083-449d-874c-44c91fe6fbfb.png">  
 내가 혼자 디자인해서 좀 구리다.  
 
 게시글에 운동 영상과 운동 일지를 기록할 수 있다.  
-저장하면 현재 시간으로 기록되며 바로 공유된다.  
+영상을 선택하고 저장을 누르면 현재 시간으로 기록되며 피드에 바로 공유가 된다.  
 
 ### 문제점
 데이터베이스의 공간과 읽기쓰기는 용량이 제한되어 있다.  
@@ -88,12 +89,12 @@ Future<Uint8List?> _loadThumbnail(XFile vid) async {
 원시 데이터 형태로 만들게 했다.  
 굳이 썸네일 사진을 저장할 필요가 없을거 같아서.  
 
-### 에러 발생
-영상을 선택하고 저장 버튼을 누르니까 데이터베이스에 저장이 안 되고 콘솔에 아래와 같은 에러가 발생했다.  
+### 에러
+영상을 선택하고 저장 버튼을 누르니까 데이터베이스에 저장이 안 되고 콘솔에 아래와 같은 에러가 발생했었다.  
 ```
 flutter: 'package:firebase_storage/src/reference.dart': Failed assertion: line 127 pos 12: 'file.absolute.existsSync()': is not true.
 ```
-에러는 파일이 존재하지 않는다고 한다.(뭔 소리야)  
+에러는 파일이 존재하지 않는다고 한다. ~~뭔 소리야~~  
 `flutter clean`으로 해결했다.  
 플러터에서 환경이 바뀌고 나오는 에러는 웬만하면 저 명령어로 해결이 되더라.  
 
