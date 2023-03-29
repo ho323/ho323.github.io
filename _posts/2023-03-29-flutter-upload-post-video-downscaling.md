@@ -49,27 +49,27 @@ Future<void> _downscaleVideo(XFile vid) async {
 문서를 참고해서 만들었다.  
 
 ### 파일 이름
-파일 이름은 `해당날짜_해당시간_유저아이디.mp4` 이러한 형태로 설계했다.  
+파일 이름은 `해당시간_유저아이디.mp4` 이러한 형태로 설계했다.  
 ```dart
 void uploadVideo(XFile vid) async {
-  String now = DateTime.now().toString();
-  String filename =
-      '${now.split(' ')[0]}_${now.split(' ')[1].split('.')[0]}_$userId.mp4';
+    File file = File(vid.path);
+    DateTime now = DateTime.now();
+    String fileName = '${now.year}_${now.month}_${now.day}_'
+        '${now.hour}_${now.minute}_${now.second}_$userId.mp4';
 
-  final storageRef =
-      FirebaseStorage.instanceFor(bucket: "스토리지 주소")
-          .ref();
-  final mountainsRef = storageRef.child(filename);
-  final mountainVideoRef = storageRef.child("video/$filename");
-  assert(mountainsRef.name == mountainVideoRef.name);
-  assert(mountainsRef.fullPath != mountainVideoRef.fullPath);
+    final storageRef = FirebaseStorage.instanceFor(
+        bucket: "스토리지 주소").ref();
+    final mountainsRef = storageRef.child(fileName);
+    final mountainVideoRef = storageRef.child("video/$fileName");
+    assert(mountainsRef.name == mountainVideoRef.name);
+    assert(mountainsRef.fullPath != mountainVideoRef.fullPath);
 
-  try {
-    await mountainVideoRef.putFile(File(vid.path));
-  } on FirebaseException catch (e) {
-    print(e);
+    try {
+      await mountainVideoRef.putFile(file);
+    } on FirebaseException catch (e) {
+      print(e);
+    }
   }
-}
 ```
 이것 또한 Firebase 문서를 참고해서 만들었다.  
 
@@ -89,14 +89,6 @@ Future<Uint8List?> _loadThumbnail(XFile vid) async {
 원시 데이터 형태로 만들게 했다.  
 굳이 썸네일 사진을 저장할 필요가 없을거 같아서.  
 
-### 에러
-영상을 선택하고 저장 버튼을 누르니까 데이터베이스에 저장이 안 되고 콘솔에 아래와 같은 에러가 발생했었다.  
-```
-flutter: 'package:firebase_storage/src/reference.dart': Failed assertion: line 127 pos 12: 'file.absolute.existsSync()': is not true.
-```
-에러는 파일이 존재하지 않는다고 한다. ~~뭔 소리야~~  
-`flutter clean`으로 해결했다.  
-플러터에서 환경이 바뀌고 나오는 에러는 웬만하면 저 명령어로 해결이 되더라.  
 
 <img width="766" alt="4" src="https://user-images.githubusercontent.com/86637300/228469632-fa0ac427-f97c-440f-801e-05bffea0885e.png">  
 Firebase에서 확인해보면 잘 올라가 있다.  
