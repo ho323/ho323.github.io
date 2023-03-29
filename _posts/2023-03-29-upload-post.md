@@ -17,9 +17,9 @@ search: true
 
 데이터베이스는 Firebase를 사용한다.  
 HomeScreen에 FloatingActionButton 기능을 사용하여 언제든 버튼을 눌러서 게시글을 업로드 할 수 있게 설계했다.  
-![](2023-03-29-upload-post/Simulator%20Screen%20Shot%20-%20iPhone%2014%20Pro%20-%202023-03-29%20at%2016.23.59.png)  
+<img height="590" width="286" alt="1" src="https://user-images.githubusercontent.com/86637300/228469652-f0fb55f4-60e8-4d48-bd18-a66f57746878.png">  
 
-![](2023-03-29-upload-post/Simulator%20Screen%20Shot%20-%20iPhone%2014%20Pro%20-%202023-03-29%20at%2016.24.12.png)  
+<img height="590" width="286" alt="2" src="https://user-images.githubusercontent.com/86637300/228469650-729f001a-3083-449d-874c-44c91fe6fbfb.png">  
 내가 혼자 디자인해서 좀 구리다.  
 
 게시글에 운동 영상과 운동 일지를 기록할 수 있다.  
@@ -75,7 +75,7 @@ void uploadVideo(XFile vid) async {
 이것 또한 파이어베이스 문서를 참고해서 만들었다.  
 
 ### 썸네일
-![](2023-03-29-upload-post/3.png)  
+<img height="590" width="286" alt="3" src="https://user-images.githubusercontent.com/86637300/228469639-b683ad86-2178-4919-95e4-43413cb68cf2.png">  
 영상을 선택하면 +아이콘이 없어지고 영상의 썸네일이 등장한다.(영상의 첫 부분)  
 썸네일을 클릭하면 영상을 다시 선택할 수 있다.  
 ```dart
@@ -99,5 +99,5 @@ flutter: 'package:firebase_storage/src/reference.dart': Failed assertion: line 1
 `flutter clean`으로 해결했다.  
 플러터에서 환경이 바뀌고 나오는 에러는 웬만하면 저 명령어로 해결이 되더라.  
 
-![](2023-03-29-upload-post/4.png)  
+<img width="766" alt="4" src="https://user-images.githubusercontent.com/86637300/228469632-fa0ac427-f97c-440f-801e-05bffea0885e.png">  
 Firebase에서 확인해보면 잘 올라가 있다.  
