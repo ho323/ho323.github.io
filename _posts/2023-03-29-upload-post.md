@@ -71,7 +71,7 @@ void uploadVideo(XFile vid) async {
   }
 }
 ```
-이것 또한 파이어베이스 문서를 참고해서 만들었다.  
+이것 또한 Firebase 문서를 참고해서 만들었다.  
 
 ### 썸네일
 <img height="590" width="286" alt="3" src="https://user-images.githubusercontent.com/86637300/228469639-b683ad86-2178-4919-95e4-43413cb68cf2.png">  
