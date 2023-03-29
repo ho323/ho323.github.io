@@ -49,7 +49,8 @@ Future<void> _downscaleVideo(XFile vid) async {
 문서를 참고해서 만들었다.  
 
 ### 파일 이름
-파일 이름은 `해당시간_유저아이디.mp4` 이러한 형태로 설계했다.  
+파일 이름은 `업로드날짜-업로드시간-유저아이디.mp4` 이러한 형태로 설계했다.  
+-를 기준으로 날짜, 시간, 유저아이디 정보를 가져올 수 있게 했다.  
 ```dart
 void uploadVideo(XFile vid) async {
     File file = File(vid.path);
