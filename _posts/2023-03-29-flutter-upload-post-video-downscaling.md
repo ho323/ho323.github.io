@@ -1,5 +1,5 @@
 ---
-title: "Flutter 게시글 업로드 및 영상 다운 스케일링"
+title: "[Flutter] 게시글 업로드 및 영상 다운 스케일링"
 categories: Flutter
 tags:
   - Flutter
