@@ -4,7 +4,7 @@ categories: Flutter
 tags:
   - Flutter
   - Git
-  - App
+  - Application
   - Figma
 search: true
 ---
