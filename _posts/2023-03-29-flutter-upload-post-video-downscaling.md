@@ -4,7 +4,7 @@ categories: Flutter
 tags:
   - Flutter
   - Firebase
-  - App
+  - Application
   - Video
 search: true
 ---
