@@ -4,7 +4,7 @@ categories: Flutter
 tags:
   - Flutter
   - Error
-  - App
+  - Application
   - Lifecycle
 search: true
 ---
