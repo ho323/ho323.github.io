@@ -4,7 +4,6 @@ categories: Flutter
 tags:
   - Flutter
   - Application
-  - Theory
 search: true
 ---
 
