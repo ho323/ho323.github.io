@@ -295,3 +295,7 @@ defaults:
 mathjax:
   enable: true
   input: TeX-AMS-MML_HTMLorMML
+
+# Content Security Policy
+# https://docs.github.com/en/github-ae@latest/articles/content-security-policy
+csp: "default-src 'self'; connect-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; worker-src 'none';"
