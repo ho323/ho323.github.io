@@ -291,7 +291,10 @@ defaults:
       share: true
       related: true
 
-# MathJax settings
-mathjax:
-  enable: true
-  cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+# To enable add `mathjax: true` to your configuration file and include the
+# math partial where needed.
+katex:
+  math: "katex"
+  auto-render: true
+  
