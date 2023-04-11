@@ -291,10 +291,3 @@ defaults:
       share: true
       related: true
 
-
-# To enable add `mathjax: true` to your configuration file and include the
-# math partial where needed.
-katex:
-  math: "katex"
-  auto-render: true
-  
