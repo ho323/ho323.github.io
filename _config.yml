@@ -291,3 +291,7 @@ defaults:
       share: true
       related: true
 
+# MathJax (http://www.mathjax.org/)
+mathjax:
+  enable: true
+  input: TeX-AMS-MML_HTMLorMML
